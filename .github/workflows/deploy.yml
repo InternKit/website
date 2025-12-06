@@ -1,0 +1,33 @@
+name: Deploy
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Rsync repository to server
+      uses: burnett01/rsync-deployments@7.0.1
+      with:
+        switches: -avzrO --delete --exclude='.git' --exclude='node_modules' --exclude='build'
+        path: "./"
+        remote_path: /opt/stacks/internkit-website/
+        remote_host: ${{ secrets.SSH_HOST }}
+        remote_user: ${{ secrets.SSH_USERNAME }}
+        remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
+    
+    - name: Deploy with Docker Compose
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          cd /opt/stacks/internkit-website
+          docker compose down
+          docker compose build --no-cache
+          docker compose up -d
