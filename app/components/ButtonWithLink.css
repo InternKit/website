@@ -1,0 +1,67 @@
+.button-primary, .button-secondary, .button-on-purple{
+    transition: all 0.2s ease-in-out;
+}
+
+.button-primary:hover, .button-secondary:hover, .button-on-purple:hover{
+    transform: translateY(-2px);
+}
+
+.button-primary:hover {
+    border-color: var(--color-purple-light);
+    box-shadow: 0 4px 0px rgba(180, 147, 255, 0.80);
+}
+
+[data-theme="dark"] .button-primary:hover {
+    border-color: white;
+    box-shadow: 0 4px 0px rgb(182, 182, 182);
+}
+
+.button-secondary:hover {
+    border-color: var(--color-brand-dark);
+    box-shadow: 0 4px 0px var(--color-brand-dark)
+}
+
+[data-theme="dark"] .button-secondary:hover {
+    border-color: white;
+    box-shadow: 0 4px 0px white;
+}
+
+.button-on-purple:hover {
+    box-shadow: 0 4px 0px var(--color-purple-secondary);
+}
+
+[data-theme="dark"] .button-on-purple:hover {
+    box-shadow: 0 4px 0px var(--color-purple-secondary);
+}
+
+.button-primary:active, .button-secondary:active, .button-on-purple:active{
+    transform: translateY(0);
+}
+
+.button-primary:active {
+    border-color: var(--color-purple-light);
+    box-shadow: 0 2px 0px rgba(180, 147, 255, 0.20);
+}
+
+[data-theme="dark"] .button-primary:active {
+    border-color: white;
+    box-shadow: 0 2px 0px rgb(182, 182, 182);
+}
+
+.button-secondary:active {
+    border-color: var(--color-brand-dark);
+    box-shadow: 0 2px 0px var(--color-brand-dark);
+}
+
+[data-theme="dark"] .button-secondary:active {
+    border-color: white;
+    box-shadow: 0 2px 0px white;
+}
+
+.button-on-purple:active {
+    box-shadow: 0 2px 0px var(--color-purple-secondary);
+}
+
+[data-theme="dark"] .button-on-purple:active {
+    box-shadow: 0 2px 0px var(--color-purple-secondary);
+}
