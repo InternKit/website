@@ -1,57 +1,246 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+/* InternKit design system v0.1. Role values live here and nowhere else.
+   The marketing site is light only. */
+
+:root {
+  color-scheme: light;
+
+  /* Surfaces */
+  --bg-app: #F7F6FA;
+  --bg-surface: #FFFFFF;
+  --bg-sunken: #EFEDF5;
+  --bg-inverse: #15121F;
+  --bg-hero: #8A38F5;
+
+  /* Text */
+  --text-1: #15121F;
+  --text-2: #46415A;
+  --text-3: #5F5A73;
+  --text-link: #5D13C5;
+  --text-accent: #4A0FA8;
+  --text-disabled: #8B869E;
+  --text-on-action: #FFFFFF;
+  --text-on-highlight: #15121F;
+  --text-on-inverse: #FFFFFF;
+
+  /* Lines, focus, Stamp */
+  --border-hair: #DDDAE7;
+  --border-control: #8B869E;
+  --border-control-hover: #46415A;
+  --border-ink: #15121F;
+  --border-inverse: transparent;
+  --focus-ring: #15121F;
+  --stamp-shadow: #15121F;
+
+  /* Action and highlight */
+  --action: #5D13C5;
+  --action-hover: #4A0FA8;
+  --action-tint: #ECE8FD;
+  --action-tint-weak: #F6F3FE;
+  --action-line: #D9CCFB;
+  --highlight: #CDF25A;
+  --tile-lime: #F2FCCF;
+
+  /* Status: solid (meters, icons) / fg (text) / tint (fills) / line (outlines) */
+  --success-solid: #1B9A52;  --success-fg: #11703A;  --success-tint: #E2F5E9;  --success-line: #9ED7B2;
+  --warning-solid: #D87606;  --warning-fg: #9A4800;  --warning-tint: #FFEDD5;  --warning-line: #F2C48E;
+  --danger-solid: #D9362B;   --danger-fg: #B3261E;   --danger-tint: #FDE7E5;   --danger-line: #F2A9A4;
+  --info-solid: #3B6EF2;     --info-fg: #1E4FD6;     --info-tint: #E4ECFF;     --info-line: #A9C0F7;
+}
+
+/* Tailwind only knows the roles: default palettes, fonts, sizes, radii and shadows are wiped. */
+@theme inline {
+  --color-*: initial;
+  --color-app: var(--bg-app);
+  --color-surface: var(--bg-surface);
+  --color-sunken: var(--bg-sunken);
+  --color-inverse: var(--bg-inverse);
+  --color-hero: var(--bg-hero);
+  --color-fg-1: var(--text-1);
+  --color-fg-2: var(--text-2);
+  --color-fg-3: var(--text-3);
+  --color-link: var(--text-link);
+  --color-accent: var(--text-accent);
+  --color-disabled: var(--text-disabled);
+  --color-on-action: var(--text-on-action);
+  --color-on-highlight: var(--text-on-highlight);
+  --color-on-inverse: var(--text-on-inverse);
+  --color-hair: var(--border-hair);
+  --color-control: var(--border-control);
+  --color-control-hover: var(--border-control-hover);
+  --color-ink: var(--border-ink);
+  --color-inverse-edge: var(--border-inverse);
+  --color-action: var(--action);
+  --color-action-hover: var(--action-hover);
+  --color-action-tint: var(--action-tint);
+  --color-action-tint-weak: var(--action-tint-weak);
+  --color-action-line: var(--action-line);
+  --color-highlight: var(--highlight);
+  --color-tile-lime: var(--tile-lime);
+  --color-success-solid: var(--success-solid);
+  --color-success-fg: var(--success-fg);
+  --color-success-tint: var(--success-tint);
+  --color-success-line: var(--success-line);
+  --color-warning-solid: var(--warning-solid);
+  --color-warning-fg: var(--warning-fg);
+  --color-warning-tint: var(--warning-tint);
+  --color-warning-line: var(--warning-line);
+  --color-danger-solid: var(--danger-solid);
+  --color-danger-fg: var(--danger-fg);
+  --color-danger-tint: var(--danger-tint);
+  --color-danger-line: var(--danger-line);
+  --color-info-solid: var(--info-solid);
+  --color-info-fg: var(--info-fg);
+  --color-info-tint: var(--info-tint);
+  --color-info-line: var(--info-line);
+}
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-*: initial;
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+  --font-serif: "Instrument Serif", ui-serif, serif;
 
-  /* Dark theme colors */
-  --color-brand-dark: #0a0a0f;
-  --color-brand-darker: #050507;
-  --color-purple-primary: #6B46FF;
-  --color-purple-secondary: #5C33FF;
-  --color-purple-light: #A78BFA;
-  --color-purple-gradient-from: #4F1DBF;
-  --color-purple-gradient-to: #7C3AED;
-  --color-gray-placeholder: #d1d5db;
+  /* Type scale. display-xl is the marketing-only hero size (Level 2), 40px on phones. */
+  --text-*: initial;
+  --text-display-xl: 4rem;
+  --text-display-xl--line-height: 4.25rem;
+  --text-display-xl--letter-spacing: -0.03em;
+  --text-display: 2.5rem;
+  --text-display--line-height: 2.75rem;
+  --text-display--letter-spacing: -0.025em;
+  --text-h1: 1.75rem;
+  --text-h1--line-height: 2.125rem;
+  --text-h1--letter-spacing: -0.018em;
+  --text-h2: 1.25rem;
+  --text-h2--line-height: 1.75rem;
+  --text-h2--letter-spacing: -0.01em;
+  --text-h3: 1rem;
+  --text-h3--line-height: 1.5rem;
+  --text-body-l: 1rem;
+  --text-body-l--line-height: 1.5rem;
+  --text-body: 0.875rem;
+  --text-body--line-height: 1.375rem;
+  --text-small: 0.8125rem;
+  --text-small--line-height: 1.25rem;
+  --text-label: 0.6875rem;
+  --text-label--line-height: 1rem;
+  --text-label--letter-spacing: 0.06em;
+  --text-stat: 2rem;
+  --text-stat--line-height: 2.25rem;
+  --text-score: 1.25rem;
+  --text-score--line-height: 1.5rem;
 
-  /* Light theme colors */
-  --color-brand-light: #f8f9fa;
-  --color-brand-lighter: #ffffff;
-  --color-text-dark: #1a1a1a;
-  --color-text-gray: #4a5568;
-  --color-light-border: #e2e8f0;
-  --color-light-accent: #f3f4f6;
+  --font-weight-*: initial;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  --radius-*: initial;
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-pill: 9999px;
+
+  --shadow-*: initial;
+  --container-content: 70rem;
+
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
 }
 
-html,
-body {
-  @apply bg-brand-light text-text-dark dark:bg-brand-dark dark:text-white;
-  transition: background 0.3s ease, color 0.3s ease;
+/* Page width: 1120px content, side padding per breakpoint (16 / 24 / 32 / 48). */
+@utility wrap {
+  margin-inline: auto;
+  width: 100%;
+  max-width: calc(var(--container-content) + 2 * var(--spacing) * 4);
+  padding-inline: calc(var(--spacing) * 4);
+  @variant sm { max-width: calc(var(--container-content) + 2 * var(--spacing) * 6); padding-inline: calc(var(--spacing) * 6); }
+  @variant lg { max-width: calc(var(--container-content) + 2 * var(--spacing) * 8); padding-inline: calc(var(--spacing) * 8); }
+  @variant 2xl { max-width: calc(var(--container-content) + 2 * var(--spacing) * 12); padding-inline: calc(var(--spacing) * 12); }
 }
 
-html {
-  color-scheme: light;
-  background:
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E"),
-    linear-gradient(135deg, #f8f9fa 0%, #e9d5ff 25%, #ddd6fe 50%, #c4b5fd 75%, #f8f9fa 100%);
-  background-size: 200px 200px, 100% 100%;
-  background-position: 0 0, 0 0;
+/* The Stamp, Level 2 (marketing): 2px ink outline, 5px hard shadow. */
+@utility stamp {
+  border: 2px solid var(--border-ink);
+  box-shadow: 5px 5px 0 0 var(--stamp-shadow);
 }
 
-html[data-theme="dark"] {
-  color-scheme: dark;
-  background:
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E"),
-    linear-gradient(135deg, #050507 0%, #1a0a3a 20%, #4F1DBF 40%, #6B46FF 60%, #1a0a3a 80%, #050507 100%);
-  background-size: 200px 200px, 100% 100%;
-  background-position: 0 0, 0 0;
+/* Large stamp: anything floating over content. */
+@utility stamp-lg {
+  border: 2px solid var(--border-ink);
+  box-shadow: 6px 6px 0 0 var(--stamp-shadow);
 }
 
-@media (max-width: 768px) {
-  html,
+/* Pressable Stamp: flat ink outline at rest. On hover it lifts off the page and the hard
+   shadow appears where it sat; pressing drops it back down. */
+@utility stamp-press {
+  border: 2px solid var(--border-ink);
+  box-shadow: 0 0 0 0 var(--stamp-shadow);
+  transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out);
+  &:hover { transform: translate(-4px, -4px); box-shadow: 4px 4px 0 0 var(--stamp-shadow); }
+  &:active { transform: translate(0, 0); box-shadow: 0 0 0 0 var(--stamp-shadow); }
+}
+
+/* The Highlighter: max one per screen, ink on lime only. */
+@utility highlight {
+  background-color: var(--highlight);
+  color: var(--text-on-highlight);
+  padding-inline: 0.15em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* The Label: mono caps, never sentences. */
+@utility label {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+  letter-spacing: var(--text-label--letter-spacing);
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+/* The voice: one serif-italic word, Level 2 only. */
+@utility voice {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.14em;
+  letter-spacing: 0;
+}
+
+@layer base {
+  html {
+    background: var(--bg-app);
+  }
+
   body {
-    padding: 10px;
+    background: var(--bg-app);
+    color: var(--text-1);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* One focus ring for everything; white on violet and ink surfaces. */
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 3px;
+  }
+  .on-fill :focus-visible {
+    outline-color: var(--text-on-action);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      transition-duration: 0s !important;
+      animation-duration: 0s !important;
+    }
   }
 }
