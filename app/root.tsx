@@ -13,6 +13,8 @@ import { htmlLang } from "./translations";
 import { PreferencesProvider, usePreferences } from "./contexts/PreferencesContext";
 
 export const links: Route.LinksFunction = () => [
+  { rel: "icon", href: "/favicon.ico", sizes: "48x48 32x32 16x16" },
+  { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
