@@ -1,26 +1,34 @@
+import { RefreshCw, ClipboardCheck, ListChecks } from "lucide-react";
 import { usePreferences } from "~/contexts/PreferencesContext";
+
+const steps = [
+  { n: "01", Icon: RefreshCw, key: "platform.step1" },
+  { n: "02", Icon: ClipboardCheck, key: "platform.step2" },
+  { n: "03", Icon: ListChecks, key: "platform.step3" },
+];
 
 export function PlatformSection() {
   const { t } = usePreferences();
 
   return (
-    <section id="platform" className="py-16 md:py-24 lg:py-32">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          {/* Title and subtitle */}
-          <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">
-              {t("platform.title")}
-            </h2>
-            <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              {t("platform.description")}
-            </p>
-          </div>
-
-          {/* Placeholder image box */}
-          <div className="bg-gray-placeholder rounded-3xl md:rounded-[3rem] h-64 md:h-96 lg:h-[700px] w-full"></div>
-        </div>
+    <section id="how-it-works" className="wrap py-12 md:py-16">
+      <div className="max-w-2xl mb-12">
+        <h2 className="text-display font-semibold mb-4">{t("platform.title")}</h2>
+        <p className="text-body-l text-fg-2">{t("platform.description")}</p>
       </div>
+
+      <ol className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {steps.map(({ n, Icon, key }) => (
+          <li key={n} className="bg-tile-lime rounded-md stamp p-6 flex flex-col gap-4">
+            <div className="flex items-center justify-between">
+              <span className="label text-fg-2">{t("platform.stepLabel")} {n}</span>
+              <Icon className="size-5 text-fg-1" strokeWidth={1.75} aria-hidden />
+            </div>
+            <h3 className="text-h1 font-semibold">{t(`${key}.title`)}</h3>
+            <p className="text-body text-fg-2">{t(`${key}.body`)}</p>
+          </li>
+        ))}
+      </ol>
     </section>
   );
 }

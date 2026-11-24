@@ -9,10 +9,12 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import { htmlLang } from "./translations";
 import { PreferencesProvider, usePreferences } from "./contexts/PreferencesContext";
-import { PreferencesToggle } from "./components/PreferencesToggle";
 
 export const links: Route.LinksFunction = () => [
+  { rel: "icon", href: "/favicon.ico", sizes: "48x48 32x32 16x16" },
+  { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
@@ -21,37 +23,23 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=Geist:wght@400..600&family=Geist+Mono:wght@500&family=Instrument+Serif:ital@1&display=swap",
   },
 ];
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
-  const { theme, language } = usePreferences();
+  const { language } = usePreferences();
 
   return (
-    <html lang={language} data-theme={theme}>
+    <html lang={htmlLang[language]}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                const theme = localStorage.getItem('theme') ||
-                  (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-                document.documentElement.setAttribute('data-theme', theme);
-              })();
-            `,
-          }}
-        />
       </head>
       <body>
-        <div className="relative z-10">
-          {children}
-        </div>
-        <PreferencesToggle />
+        {children}
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -88,11 +76,11 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
+    <main className="wrap py-16">
+      <h1 className="text-display font-semibold mb-4">{message}</h1>
+      <p className="text-body-l text-fg-2">{details}</p>
       {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
+        <pre className="w-full mt-6 p-4 overflow-x-auto rounded-md border border-hair bg-surface font-mono text-small">
           <code>{stack}</code>
         </pre>
       )}

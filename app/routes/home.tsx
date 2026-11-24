@@ -1,34 +1,29 @@
 import type { Route } from "./+types/home";
 import { Header } from "../components/Header";
 import { Hero } from "../components/Hero";
+import { SyncSection } from "../components/SyncSection";
 import { PlatformSection } from "../components/PlatformSection";
 import { InsightsSection } from "../components/InsightsSection";
-import { TestimonialsSection } from "../components/TestimonialsSection";
 import { Footer } from "../components/Footer";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Internkit - Where experience meets career opportunities" },
-    { name: "description", content: "Learn expert tips at your exponential edge with real-life career strategy advice." },
+    { title: "InternKit – AI CV screening for small tech teams" },
+    { name: "description", content: "Your open positions sync automatically and every application gets a suitability score, strengths and risks. No setup, no manual uploads." },
   ];
 }
 
 export default function Home() {
   return (
     <>
-      <svg width='0' height='0' aria-hidden='true'>
-        <filter id='grain' colorInterpolationFilters='sRGB'>
-          <feTurbulence type='fractalNoise' baseFrequency='.9713' numOctaves='4'/>
-          <feDisplacementMap in='SourceGraphic' scale='150' xChannelSelector='R'/>
-        </filter>
-      </svg>
       <Header />
-      <Hero />
-      <PlatformSection />
-      <InsightsSection columns={2} />
+      <main>
+        <Hero />
+        <SyncSection />
+        <PlatformSection />
+        <InsightsSection />
+      </main>
 
-      {/* Testimonials Section will be added once we have some testimonials */}
-      {/* <TestimonialsSection /> */}
       <Footer />
     </>
   );
