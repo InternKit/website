@@ -1,41 +1,95 @@
-import { Link } from "react-router";
+import { ArrowRightIcon, TriangleAlert } from "lucide-react";
 import { ButtonWithLink } from "./ButtonWithLink";
-import { ArrowRightIcon } from "lucide-react";
+import { Rich } from "./Rich";
+import { Meter, Recommendation } from "./Meter";
 import { usePreferences } from "~/contexts/PreferencesContext";
+
+const APP_URL = "https://app.internkit.ee";
+
+function CandidateCard({ name, initials, meta, skills, score, isNew, risk }: {
+  name: string; initials: string; meta: string; skills: string[]; score: number; isNew?: boolean; risk?: string;
+}) {
+  const { t } = usePreferences();
+
+  return (
+    <article className="bg-surface rounded-md stamp p-5 md:p-6 flex flex-col gap-4">
+      <div className="flex items-center gap-3">
+        <span className="size-10 shrink-0 rounded-full bg-action-tint text-accent text-body font-semibold inline-flex items-center justify-center">
+          {initials}
+        </span>
+        <div className="flex-1 min-w-0">
+          <h3 className="text-h3 font-semibold">{name}</h3>
+          <p className="text-small text-fg-3">{meta}</p>
+        </div>
+        {isNew && <span className="label rounded-xs bg-highlight text-on-highlight px-1.5 py-0.5">{t("mock.new")}</span>}
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {skills.map((s) => (
+          <span key={s} className="rounded-pill border border-action-line bg-action-tint text-accent px-2.5 py-0.5 text-small">
+            {s}
+          </span>
+        ))}
+        {risk && (
+          <span className="inline-flex items-center gap-1 rounded-pill border border-warning-line bg-warning-tint text-warning-fg px-2.5 py-0.5 text-small">
+            <TriangleAlert className="size-4" strokeWidth={1.75} aria-hidden />
+            {risk}
+          </span>
+        )}
+      </div>
+      <div>
+        <div className="flex items-center justify-between mb-2">
+          <span className="label text-fg-3">{t("mock.scoreLabel")}</span>
+          <Recommendation score={score} />
+        </div>
+        <Meter score={score} />
+      </div>
+    </article>
+  );
+}
 
 export function Hero() {
   const { t } = usePreferences();
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 md:pt-20">
-
-      {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 md:px-6 lg:px-8 py-20 md:py-32">
-        <div className="max-w-4xl mx-auto text-center">
-          <img
-            src="/logo.svg"
-            alt="Internkit"
-            className="w-16 h-16 mx-auto mb-6 rounded-lg"
+    <section className="wrap py-12 md:py-16 grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-12 lg:gap-16 items-center">
+      <div>
+        <h1 className="text-display md:text-display-xl font-semibold mb-6">
+          <Rich text={t("hero.title")} />
+        </h1>
+        <p className="text-body-l text-fg-2 max-w-xl mb-10">
+          <Rich text={t("hero.description")} />
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <ButtonWithLink link={APP_URL} text={t("hero.joinButton")} size="lg" />
+          <ButtonWithLink
+            link="/pricing"
+            text={t("hero.plansButton")}
+            variant="secondary"
+            size="lg"
+            icon={<ArrowRightIcon className="size-5" strokeWidth={1.75} aria-hidden />}
           />
-
-          <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 md:mb-8 leading-tight whitespace-pre-line">
-            {t("hero.title")}
-          </h1>
-
-          <p className="text-base md:text-lg lg:text-xl text-gray-600 dark:text-gray-300 mb-8 md:mb-12 max-w-2xl mx-auto">
-            {t("hero.description")}
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6">
-            <ButtonWithLink link="https://app.internkit.ee" text={t("hero.joinButton")} />
-            <ButtonWithLink
-              link="/pricing"
-              text={t("hero.plansButton")}
-              variant="secondary"
-              icon={<ArrowRightIcon className="w-6 h-6" />}
-            />
-          </div>
         </div>
+      </div>
+
+      {/* Product preview on the brand panel. Sample candidates, not real people. */}
+      <div className="on-fill bg-hero rounded-lg p-5 sm:p-8 flex flex-col gap-6" aria-label={t("mock.previewLabel")} role="img">
+        <p className="label text-on-action">{t("mock.listing")}</p>
+        <CandidateCard
+          name="Mari Tamm"
+          initials="MT"
+          meta={t("mock.c1.meta")}
+          skills={["React", "TypeScript", "Node.js"]}
+          score={86}
+          isNew
+        />
+        <CandidateCard
+          name="Karl Saar"
+          initials="KS"
+          meta={t("mock.c2.meta")}
+          skills={["Vue", "JavaScript"]}
+          score={58}
+          risk={t("risk.shortTenure")}
+        />
       </div>
     </section>
   );
