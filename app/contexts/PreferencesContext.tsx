@@ -1,47 +1,18 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
 import { translations } from "../translations";
 import type { Language } from "../translations";
 
-type Theme = "dark" | "light";
-
 interface PreferencesContextType {
-  theme: Theme;
   language: Language;
-  toggleTheme: () => void;
-  toggleLanguage: () => void;
+  setLanguage: (language: Language) => void;
   t: (key: string, params?: Record<string, string | number>) => string;
 }
 
 const PreferencesContext = createContext<PreferencesContextType | undefined>(undefined);
 
 export function PreferencesProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("light");
   const [language, setLanguage] = useState<Language>("en");
-
-  // Initialize theme from localStorage on mount
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") as Theme | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setTheme("dark");
-    }
-  }, []);
-
-  // Persist theme to localStorage and update HTML attribute
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
-    document.documentElement.setAttribute("data-theme", theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
-  };
-
-  const toggleLanguage = () => {
-    setLanguage((prev) => (prev === "en" ? "ee" : "en"));
-  };
 
   const t = (key: string, params?: Record<string, string | number>): string => {
     let text: string = translations[language][key as keyof typeof translations.en] || key;
@@ -58,7 +29,7 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
 
   return (
     <PreferencesContext.Provider
-      value={{ theme, language, toggleTheme, toggleLanguage, t }}
+      value={{ language, setLanguage, t }}
     >
       {children}
     </PreferencesContext.Provider>
