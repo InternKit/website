@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { usePreferences } from "~/contexts/PreferencesContext";
 import { ArrowRight } from "lucide-react";
 import { ButtonWithLink } from "./ButtonWithLink";
+import { APP_URL } from "~/constants";
 
 const linkClass = "text-body text-fg-2 hover:text-link transition-colors";
 
@@ -24,7 +25,7 @@ export function Footer() {
               {t("footer.cta.title")}
             </h2>
             <ButtonWithLink
-              link="https://app.internkit.ee"
+              link={APP_URL}
               text={t("footer.cta.button")}
               size="lg"
               icon={<ArrowRight className="size-5" strokeWidth={1.75} aria-hidden />}

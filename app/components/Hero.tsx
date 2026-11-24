@@ -1,13 +1,13 @@
-import { ArrowRightIcon, TriangleAlert } from "lucide-react";
+import { ArrowRightIcon } from "lucide-react";
 import { ButtonWithLink } from "./ButtonWithLink";
 import { Rich } from "./Rich";
-import { Meter, Recommendation } from "./Meter";
+import { Meter, Recommendation, RiskPill, sampleCandidate } from "./Meter";
 import { usePreferences } from "~/contexts/PreferencesContext";
+import { APP_URL } from "~/constants";
 
-const APP_URL = "https://app.internkit.ee";
 
-function CandidateCard({ name, initials, meta, skills, score, isNew, risk }: {
-  name: string; initials: string; meta: string; skills: string[]; score: number; isNew?: boolean; risk?: string;
+function CandidateCard({ name, initials, meta, skills, score, risk }: {
+  name: string; initials: string; meta: string; skills: string[]; score: number; risk?: string;
 }) {
   const { t } = usePreferences();
 
@@ -21,7 +21,6 @@ function CandidateCard({ name, initials, meta, skills, score, isNew, risk }: {
           <h3 className="text-h3 font-semibold">{name}</h3>
           <p className="text-small text-fg-3">{meta}</p>
         </div>
-        {isNew && <span className="label rounded-xs bg-highlight text-on-highlight px-1.5 py-0.5">{t("mock.new")}</span>}
       </div>
       <div className="flex flex-wrap gap-2">
         {skills.map((s) => (
@@ -29,12 +28,7 @@ function CandidateCard({ name, initials, meta, skills, score, isNew, risk }: {
             {s}
           </span>
         ))}
-        {risk && (
-          <span className="inline-flex items-center gap-1 rounded-pill border border-warning-line bg-warning-tint text-warning-fg px-2.5 py-0.5 text-small">
-            <TriangleAlert className="size-4" strokeWidth={1.75} aria-hidden />
-            {risk}
-          </span>
-        )}
+        {risk && <RiskPill label={risk} />}
       </div>
       <div>
         <div className="flex items-center justify-between mb-2">
@@ -75,12 +69,9 @@ export function Hero() {
       <div className="on-fill bg-hero rounded-lg p-5 sm:p-8 flex flex-col gap-6" aria-label={t("mock.previewLabel")} role="img">
         <p className="label text-on-action">{t("mock.listing")}</p>
         <CandidateCard
-          name="Mari Tamm"
-          initials="MT"
+          {...sampleCandidate}
           meta={t("mock.c1.meta")}
           skills={["React", "TypeScript", "Node.js"]}
-          score={86}
-          isNew
         />
         <CandidateCard
           name="Karl Saar"

@@ -9,6 +9,7 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import { htmlLang } from "./translations";
 import { PreferencesProvider, usePreferences } from "./contexts/PreferencesContext";
 
 export const links: Route.LinksFunction = () => [
@@ -28,7 +29,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   const { language } = usePreferences();
 
   return (
-    <html lang={language}>
+    <html lang={htmlLang[language]}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

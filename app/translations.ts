@@ -1,5 +1,8 @@
 export type Language = "en" | "ee";
 
+// BCP 47 codes for lang attributes: the app keys Estonian as "ee", but its language code is "et".
+export const htmlLang: Record<Language, string> = { en: "en", ee: "et" };
+
 // Markup rendered by components/Rich.tsx: *word* → serif voice, ==phrase== → Highlighter (max one per screen).
 export const translations = {
   en: {
@@ -84,10 +87,6 @@ export const translations = {
     "features.embed.title": "Apply link and careers-page embed",
     "features.embed.body": "Collect applications through a public link or a widget on your own site.",
 
-    // Testimonials Section (not rendered yet)
-    "testimonials.title": "What our users are saying",
-    "testimonials.seeMore": "See more",
-    "testimonials.quote": "Started using Internkit a year ago and it was the best thing I did. It helped me grow professionally and great tips.",
 
     // Footer
     "footer.cta.title": "Your next hire is\nalready in your inbox",
@@ -208,10 +207,6 @@ export const translations = {
     "features.embed.title": "Kandideerimislink ja karjäärilehe vidin",
     "features.embed.body": "Kogu kandideerimisi avaliku lingi või oma veebilehele lisatud vidina kaudu.",
 
-    // Testimonials Section (not rendered yet)
-    "testimonials.title": "Mida meie kasutajad ütlevad",
-    "testimonials.seeMore": "Vaata rohkem",
-    "testimonials.quote": "Alustasin Internkiti kasutamist aasta tagasi ja see oli parim asi, mida tegin. See aitas mul professionaalselt kasvada ja andis suurepäraseid nõuandeid.",
 
     // Footer
     "footer.cta.title": "Su järgmine töötaja\non juba postkastis",

@@ -68,7 +68,7 @@ Never type a hex, px value or font name in a component. Fonts: Geist, Geist Mono
 ## Component Architecture
 
 **Reusable Components** (`app/components/`):
-- `ButtonWithLink`: `primary` (Stamp), `secondary`, `ghost`; sizes `md` (44px) and `lg` (52px)
+- `ButtonWithLink`: `primary` (Stamp), `secondary`, `ghost`, and `reveal` (header CTA only: primary colours, no lift, arrow slides in on hover); sizes `md` (44px) and `lg` (52px)
 - `Header`: sticky top bar, transparent at the top of the page and white with a border once scrolled; nav, `SettingsMenu` (gear dropdown with the language choice) and mobile sheet
 - `Footer`: lime CTA band and link columns
 - `Hero` (sample candidate ranking), `SyncSection` (automatic position sync, a headline selling point; Growth and Expansion only), `PlatformSection` (how it works), `InsightsSection` (sample scorecard + features): landing page sections
@@ -110,5 +110,5 @@ Compatible with AWS ECS, Google Cloud Run, Azure Container Apps, Fly.io, Railway
 - No backend API integration
 - No database or CMS
 - Forms are client-side only (submissions not implemented)
-- Static testimonials and content (hardcoded)
+- Static content (hardcoded)
 - No environment variables currently used

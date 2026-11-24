@@ -1,6 +1,6 @@
-import { Check, TriangleAlert, Mail, Upload, Sparkles, Code } from "lucide-react";
+import { Check, Mail, Upload, Sparkles, Code } from "lucide-react";
 import { usePreferences } from "~/contexts/PreferencesContext";
-import { Meter, Recommendation } from "./Meter";
+import { Meter, Recommendation, RiskPill, recommendation, sampleCandidate } from "./Meter";
 
 // The five criteria and weights the product's scorecard uses. Sample scores.
 const breakdown = [
@@ -20,6 +20,7 @@ const features = [
 
 export function InsightsSection() {
   const { t } = usePreferences();
+  const { name, initials, score } = sampleCandidate;
 
   return (
     <section className="wrap py-12 md:py-16">
@@ -33,27 +34,27 @@ export function InsightsSection() {
         <article className="rounded-md border border-hair bg-surface p-6 flex flex-col gap-6">
           <div className="flex items-center gap-3">
             <span className="size-14 shrink-0 rounded-full bg-action-tint text-accent text-h2 font-semibold inline-flex items-center justify-center">
-              MT
+              {initials}
             </span>
             <div className="flex-1">
               <p className="label text-fg-3">{t("insights.sample")}</p>
-              <h3 className="text-h2 font-semibold">Mari Tamm</h3>
+              <h3 className="text-h2 font-semibold">{name}</h3>
             </div>
             <div className="text-right">
-              <p className="text-stat font-semibold tabular-nums text-success-fg">86</p>
-              <Recommendation score={86} />
+              <p className={`text-stat font-semibold tabular-nums ${recommendation(score).fg}`}>{score}</p>
+              <Recommendation score={score} />
             </div>
           </div>
 
           <p className="text-body text-fg-2 border-l-2 border-ink pl-4">{t("insights.summary")}</p>
 
           <div className="flex flex-col gap-4">
-            {breakdown.map(({ key, weight, score }) => (
+            {breakdown.map(({ key, weight, score: criterion }) => (
               <div key={key}>
                 <p className="label text-fg-3 mb-1">
                   {t(key)} · {weight}%
                 </p>
-                <Meter score={score} />
+                <Meter score={criterion} />
               </div>
             ))}
           </div>
@@ -72,10 +73,7 @@ export function InsightsSection() {
             </div>
             <div>
               <p className="label text-fg-3 mb-3">{t("insights.risks")}</p>
-              <span className="inline-flex items-center gap-1 rounded-pill border border-warning-line bg-warning-tint text-warning-fg px-2.5 py-0.5 text-small">
-                <TriangleAlert className="size-4" strokeWidth={1.75} aria-hidden />
-                {t("risk.shortTenure")}
-              </span>
+              <RiskPill label={t("risk.shortTenure")} />
             </div>
           </div>
         </article>

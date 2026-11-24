@@ -4,7 +4,6 @@ import { Hero } from "../components/Hero";
 import { SyncSection } from "../components/SyncSection";
 import { PlatformSection } from "../components/PlatformSection";
 import { InsightsSection } from "../components/InsightsSection";
-import { TestimonialsSection } from "../components/TestimonialsSection";
 import { Footer } from "../components/Footer";
 
 export function meta({}: Route.MetaArgs) {
@@ -25,8 +24,6 @@ export default function Home() {
         <InsightsSection />
       </main>
 
-      {/* Testimonials Section will be added once we have some testimonials */}
-      {/* <TestimonialsSection /> */}
       <Footer />
     </>
   );

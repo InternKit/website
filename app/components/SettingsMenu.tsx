@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Settings, Check } from "lucide-react";
 import { usePreferences } from "~/contexts/PreferencesContext";
-import type { Language } from "~/translations";
+import { htmlLang, type Language } from "~/translations";
 
 // Language names are shown in their own language, so they are not translated.
-const languages: [Language, string, string][] = [
-  ["en", "English", "en"],
-  ["ee", "Eesti", "et"],
+const languages: [Language, string][] = [
+  ["en", "English"],
+  ["ee", "Eesti"],
 ];
 
 export function SettingsMenu() {
@@ -25,6 +25,12 @@ export function SettingsMenu() {
     return () => document.removeEventListener("pointerdown", onPointerDown);
   }, [open]);
 
+  // Move focus to the current language when the menu opens.
+  const panelRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (open) panelRef.current?.querySelector<HTMLButtonElement>('[aria-pressed="true"]')?.focus();
+  }, [open]);
+
   const close = () => {
     setOpen(false);
     buttonRef.current?.focus();
@@ -34,6 +40,10 @@ export function SettingsMenu() {
     <div
       ref={rootRef}
       className="relative"
+      // Tabbing out of the menu closes it.
+      onBlur={(e) => {
+        if (open && !rootRef.current?.contains(e.relatedTarget as Node)) setOpen(false);
+      }}
       onKeyDown={(e) => {
         if (e.key === "Escape" && open) {
           e.stopPropagation();
@@ -60,30 +70,32 @@ export function SettingsMenu() {
         />
       </button>
 
-      {/* Floats over content, so it takes the large stamp */}
-      {open && (
-        <div id="settings-menu" className="absolute right-0 top-full mt-2 z-30 w-56 rounded-sm bg-surface stamp-lg p-2">
-          <p id="settings-language" className="label text-fg-3 px-3 pt-2 pb-1">{t("settings.language")}</p>
-          <div role="group" aria-labelledby="settings-language">
-            {languages.map(([code, name, bcp47]) => (
-              <button
-                key={code}
-                lang={bcp47}
-                autoFocus={code === language}
-                aria-pressed={code === language}
-                onClick={() => {
-                  setLanguage(code);
-                  close();
-                }}
-                className="w-full h-11 flex items-center justify-between rounded-sm px-3 text-body text-fg-1 hover:bg-action-tint-weak cursor-pointer"
-              >
-                {name}
-                {code === language && <Check className="size-5" strokeWidth={1.75} aria-hidden />}
-              </button>
-            ))}
-          </div>
+      {/* Floats over content, so it takes the large stamp. Always rendered so aria-controls resolves. */}
+      <div
+        ref={panelRef}
+        id="settings-menu"
+        hidden={!open}
+        className="absolute right-0 top-full mt-2 z-30 w-56 rounded-sm bg-surface stamp-lg p-2"
+      >
+        <p id="settings-language" className="label text-fg-3 px-3 pt-2 pb-1">{t("settings.language")}</p>
+        <div role="group" aria-labelledby="settings-language">
+          {languages.map(([code, name]) => (
+            <button
+              key={code}
+              lang={htmlLang[code]}
+              aria-pressed={code === language}
+              onClick={() => {
+                setLanguage(code);
+                close();
+              }}
+              className="w-full h-11 flex items-center justify-between rounded-sm px-3 text-body text-fg-1 hover:bg-action-tint-weak cursor-pointer"
+            >
+              {name}
+              {code === language && <Check className="size-5" strokeWidth={1.75} aria-hidden />}
+            </button>
+          ))}
         </div>
-      )}
+      </div>
     </div>
   );
 }

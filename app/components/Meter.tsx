@@ -22,6 +22,18 @@ export function Recommendation({ score }: { score: number }) {
   );
 }
 
+// The sample candidate shown in both the hero and the scorecard section.
+export const sampleCandidate = { name: "Mari Tamm", initials: "MT", score: 86 };
+
+export function RiskPill({ label }: { label: string }) {
+  return (
+    <span className="inline-flex items-center gap-1 rounded-pill border border-warning-line bg-warning-tint text-warning-fg px-2.5 py-0.5 text-small">
+      <TriangleAlert className="size-4" strokeWidth={1.75} aria-hidden />
+      {label}
+    </span>
+  );
+}
+
 // Twenty ticks, coloured by band; the number always sits beside it.
 export function Meter({ score }: { score: number }) {
   const rec = recommendation(score);

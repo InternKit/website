@@ -182,7 +182,10 @@
   box-shadow: 0 0 0 0 var(--stamp-shadow);
   transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out),
     background-color var(--duration-fast) var(--ease-out);
-  &:hover { transform: translate(-4px, -4px); box-shadow: 4px 4px 0 0 var(--stamp-shadow); }
+  /* Hover-capable devices only, so a tap on a phone doesn't leave the button lifted. */
+  @media (hover: hover) {
+    &:hover { transform: translate(-4px, -4px); box-shadow: 4px 4px 0 0 var(--stamp-shadow); }
+  }
   &:active { transform: translate(0, 0); box-shadow: 0 0 0 0 var(--stamp-shadow); }
 }
 
@@ -217,6 +220,8 @@
 @layer base {
   html {
     background: var(--bg-app);
+    /* Anchor links (e.g. /#how-it-works) land below the 64px sticky header. */
+    scroll-padding-top: calc(var(--spacing) * 16);
   }
 
   body {

@@ -5,6 +5,7 @@ import { Footer } from "../components/Footer";
 import { usePreferences } from "~/contexts/PreferencesContext";
 import { ButtonWithLink } from "../components/ButtonWithLink";
 import { Rich } from "../components/Rich";
+import { APP_URL } from "~/constants";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -13,7 +14,6 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-const APP_URL = "https://app.internkit.ee";
 
 // Mirrors the self-serve plans in the product (backend/src/domain/billing.ts).
 // Growth is the recommended plan, so it alone takes the Stamp and the Highlighter.
@@ -37,14 +37,14 @@ export default function Pricing() {
           <p className="text-body-l text-fg-2 max-w-xl mx-auto">{t("pricing.subtitle")}</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
           {plans.map(({ key, cvs, price, recommended, sync }) => (
             <section
               key={key}
               className={`rounded-md bg-surface p-6 md:p-8 flex flex-col gap-8 ${recommended ? "stamp" : "border border-hair"}`}
             >
               <div>
-                <div className="flex items-center justify-between gap-2 mb-4">
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
                   <h2 className="text-h1 font-semibold">{t(`pricing.${key}`)}</h2>
                   {recommended && (
                     <span className="label rounded-pill bg-action-tint text-accent border border-action-line px-2.5 py-0.5">
@@ -53,11 +53,9 @@ export default function Pricing() {
                   )}
                 </div>
                 <p className="flex items-baseline gap-1 flex-wrap">
-                  {recommended ? (
-                    <mark className="highlight text-display font-semibold tabular-nums">{t("pricing.price", { price })}</mark>
-                  ) : (
-                    <span className="text-display font-semibold tabular-nums">{t("pricing.price", { price })}</span>
-                  )}
+                  <span className={`text-display font-semibold tabular-nums ${recommended ? "highlight" : ""}`}>
+                    {t("pricing.price", { price })}
+                  </span>
                   <span className="text-body text-fg-3">{t("pricing.perMonthVat")}</span>
                 </p>
               </div>
